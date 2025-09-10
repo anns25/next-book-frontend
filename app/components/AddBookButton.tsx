@@ -4,9 +4,10 @@ import React, { useState } from 'react';
 import AddBookDrawer from './AddBookDrawer';
 import { Button, Drawer } from '@mui/material';
 import { useAuth } from '../contexts/AuthContext';
+import { Book } from '../types/Book';
 
 interface AddBookButtonProps{
-    onAddBook : (book : any) => void;
+    onAddBook : (book : Book) => void;
 }
 
 const AddBookButton = ({onAddBook} : AddBookButtonProps) => {
@@ -36,7 +37,6 @@ const AddBookButton = ({onAddBook} : AddBookButtonProps) => {
                 <AddBookDrawer 
                     isOpen={addDrawerOpen} 
                     onClose={toggleDrawer(false)}
-                    onAddBook = {onAddBook} 
                 />
             </Drawer>
         </>

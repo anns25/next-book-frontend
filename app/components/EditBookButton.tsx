@@ -8,7 +8,7 @@ import { Book } from '../types/Book';
 
 interface EditBookButtonProps{
     book : Book;
-    onEditBook : (book : any) => void;
+    onEditBook : (book : Book) => void;
 }
 
 const EditBookButton = ({book, onEditBook} : EditBookButtonProps) => {

@@ -88,7 +88,7 @@ const DeleteBookButton = ({ book }: DeleteBookButtonProps) => {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="delete-dialog-description">
-                        Are you suer you want to delete <strong>"{book.title}"</strong> by <strong>{book.author}</strong>. This action cannot be undone.
+                        Are you suer you want to delete <strong>&quot;{book.title}&quot;</strong> by <strong>{book.author}</strong>. This action cannot be undone.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

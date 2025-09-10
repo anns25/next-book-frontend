@@ -10,9 +10,14 @@ export type CartItem = {
     quantity: number;
 };
 
+export type CartApiItem = {
+    bookId : Omit<CartItem, 'quanity'>;
+    quantity: number;
+}
+
 export type Cart = {
     userId: string;
-    items: CartItem[];
+    items: CartApiItem[];
 };
 
 export type CartResponse = {

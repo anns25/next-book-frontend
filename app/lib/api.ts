@@ -116,7 +116,7 @@ export async function loginUser(credentials: LoginCredentials): Promise<AuthResp
         }
        
         return null;
-    } catch (err: any) {
+    } catch (err: unknown) {
         console.error("Login error", err);
         return null;
     }

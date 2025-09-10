@@ -99,8 +99,8 @@ const Login = () => {
     }
 
     // Clear general error when user starts typing
-    if(errors.general){
-      setErrors(prev => ({...prev, general: undefined}));
+    if (errors.general) {
+      setErrors(prev => ({ ...prev, general: undefined }));
     }
   };
 
@@ -120,14 +120,14 @@ const Login = () => {
       return;
     }
 
-  
-      const success = await login({ username: formValues.username, password: formValues.password });
-      if (success) {
-        router.push('/');
-      } else {
-        setErrors({ general: "Invalid username or password" });
 
-      }
+    const success = await login({ username: formValues.username, password: formValues.password });
+    if (success) {
+      router.push('/');
+    } else {
+      setErrors({ general: "Invalid username or password" });
+
+    }
     // } catch (err: any) {
     //   console.log("login error : ", err);
     //   setErrors({ general: err.response?.data?.message || "An error occurred during login" });
@@ -196,201 +196,205 @@ const Login = () => {
       } else {
         setErrors({ general: "Registration failed" });
       }
-    } catch (err: any) {
-      setErrors({ general: err.response?.data?.message || "An error occurred during registration" });
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setErrors({ general: err.message });
+      } else {
+        setErrors({ general: "An error occurred during registration" });
+      }
     }
   }
 
-  return (
-    <StyledPaper>
-      <LeftSide />
+    return (
+      <StyledPaper>
+        <LeftSide />
 
-      <RightSide>
-        <Tabs
-          value={tab}
-          onChange={handleTabChange}
-          textColor="primary"
-          indicatorColor="secondary"
-          variant="fullWidth"
-          sx={{ marginBottom: 4 }}
-        >
-          <Tab label="Sign In" />
-          <Tab label="Sign Up" />
-        </Tabs>
+        <RightSide>
+          <Tabs
+            value={tab}
+            onChange={handleTabChange}
+            textColor="primary"
+            indicatorColor="secondary"
+            variant="fullWidth"
+            sx={{ marginBottom: 4 }}
+          >
+            <Tab label="Sign In" />
+            <Tab label="Sign Up" />
+          </Tabs>
 
-        {tab === 0 ? (
-          <>
-            <Typography variant="h5" fontFamily="Playfair Display" gutterBottom>
-              Welcome Back
-            </Typography>
-            {errors.general && (
-              <Typography variant="body2" color="error" sx={{ mb: 2 }}>
-                {errors.general}
+          {tab === 0 ? (
+            <>
+              <Typography variant="h5" fontFamily="Playfair Display" gutterBottom>
+                Welcome Back
               </Typography>
-            )}
-            <form onSubmit={handleLogin}>
-              <TextField
-                fullWidth
-                label="Username"
-                variant="outlined"
-                margin="normal"
-                value={formValues.username}
-                onChange={(e) => handleFieldChange("username", e.target.value)}
-                error={Boolean(errors.username)}
-                helperText={errors.username}
-              />
-              <TextField
-                fullWidth
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                variant="outlined"
-                margin="normal"
-                value={formValues.password}
-                onChange={(e) => handleFieldChange("password", e.target.value)}
-                error={Boolean(errors.password)}
-                helperText={errors.password}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} edge="end">
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  )
-                }}
-              />
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                sx={{ mt: 3 }}
-                type="submit"
-              >
-                Sign In
-              </Button>
-            </form>
-          </>
-        ) : (
-          <>
-            <Typography variant="h5" fontFamily="Playfair Display" gutterBottom>
-              Create an Account
-            </Typography>
-            {errors.general && (
-              <Typography variant="body2" color="error" sx={{ mb: 2 }}>
-                {errors.general}
-              </Typography>
-            )}
-            <form onSubmit={handleSignUp}>
-              <TextField
-                fullWidth
-                label="Name"
-                variant="outlined"
-                margin="normal"
-                value={formValues.username}
-                onChange={(e) => handleFieldChange("username", e.target.value)}
-                error={Boolean(errors.username)}
-                helperText={errors.username}
-              />
-              <TextField
-                fullWidth
-                label="Password"
-                variant="outlined"
-                type={showSignupPassword ? "text" : "password"}
-                margin="normal"
-                value={formValues.password}
-                onChange={(e) => handleFieldChange("password", e.target.value)}
-                error={Boolean(errors.password)}
-                helperText={errors.password}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton aria-label="toggle password visibility" onClick={handleClickShowSignupPassword} edge="end">
-                        {showSignupPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  )
-                }}
-              />
-              <Box sx={{ mt: 2, mb: 2 }}>
-                <Typography variant="body2">
-                  Profile Image
+              {errors.general && (
+                <Typography variant="body2" color="error" sx={{ mb: 2 }}>
+                  {errors.general}
                 </Typography>
-                {imageFile ? (
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2, mb: 2 }}>
-                    <Typography variant="body2" color={theme.palette.text.primary}>
-                      {imageFile.name} ({(imageFile.size / 1024).toFixed(2)} KB)
-                    </Typography>
-                    <IconButton
-                      color="error"
-                      onClick={handleRemoveImage}
-                      size="small"
-                    >
-                      <Delete />
-                    </IconButton>
-                  </Box>
-                ) : (
-                  <Box sx={{ display: "flex", alignItems: 'center', mt: 2, gap: 2 }}>
-                    <Button
-                      variant='outlined'
-                      component="label"
-                      color="primary"
-                      startIcon={<PhotoCamera />}
-                      sx={{ minWidth: 200 }}>
-                      Choose Image
-                      <input
-                        type="file"
-                        hidden
-                        accept="image/*"
-                        onChange={handleImageChange}
-                      />
-                    </Button>
-                  </Box>
-                )}
-
-                {errors.image && (
-                  <Typography variant="caption" color="error">
-                    {errors.image}
-                  </Typography>
-                )}
-              </Box>
-              <TextField
-                fullWidth
-                label="Email"
-                variant="outlined"
-                margin="normal"
-                value={formValues.email}
-                onChange={(e) => handleFieldChange("email", e.target.value)}
-                error={Boolean(errors.email)}
-                helperText={errors.email}
-              />
-              <Box mt={2}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={isSeller}
-                      onChange={(e) => setIsSeller(e.target.checked)}
-                      name="role"
-                      color="primary"
-                    />
-                  }
-                  label="Sign up as Seller"
+              )}
+              <form onSubmit={handleLogin}>
+                <TextField
+                  fullWidth
+                  label="Username"
+                  variant="outlined"
+                  margin="normal"
+                  value={formValues.username}
+                  onChange={(e) => handleFieldChange("username", e.target.value)}
+                  error={Boolean(errors.username)}
+                  helperText={errors.username}
                 />
-              </Box>
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                sx={{ mt: 3 }}
-                type="submit"
-              >
-                Sign Up
-              </Button>
-            </form>
-          </>
-        )}
-      </RightSide>
-    </StyledPaper>
-  );
-};
+                <TextField
+                  fullWidth
+                  label="Password"
+                  type={showPassword ? "text" : "password"}
+                  variant="outlined"
+                  margin="normal"
+                  value={formValues.password}
+                  onChange={(e) => handleFieldChange("password", e.target.value)}
+                  error={Boolean(errors.password)}
+                  helperText={errors.password}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} edge="end">
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  sx={{ mt: 3 }}
+                  type="submit"
+                >
+                  Sign In
+                </Button>
+              </form>
+            </>
+          ) : (
+            <>
+              <Typography variant="h5" fontFamily="Playfair Display" gutterBottom>
+                Create an Account
+              </Typography>
+              {errors.general && (
+                <Typography variant="body2" color="error" sx={{ mb: 2 }}>
+                  {errors.general}
+                </Typography>
+              )}
+              <form onSubmit={handleSignUp}>
+                <TextField
+                  fullWidth
+                  label="Name"
+                  variant="outlined"
+                  margin="normal"
+                  value={formValues.username}
+                  onChange={(e) => handleFieldChange("username", e.target.value)}
+                  error={Boolean(errors.username)}
+                  helperText={errors.username}
+                />
+                <TextField
+                  fullWidth
+                  label="Password"
+                  variant="outlined"
+                  type={showSignupPassword ? "text" : "password"}
+                  margin="normal"
+                  value={formValues.password}
+                  onChange={(e) => handleFieldChange("password", e.target.value)}
+                  error={Boolean(errors.password)}
+                  helperText={errors.password}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton aria-label="toggle password visibility" onClick={handleClickShowSignupPassword} edge="end">
+                          {showSignupPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <Box sx={{ mt: 2, mb: 2 }}>
+                  <Typography variant="body2">
+                    Profile Image
+                  </Typography>
+                  {imageFile ? (
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2, mb: 2 }}>
+                      <Typography variant="body2" color={theme.palette.text.primary}>
+                        {imageFile.name} ({(imageFile.size / 1024).toFixed(2)} KB)
+                      </Typography>
+                      <IconButton
+                        color="error"
+                        onClick={handleRemoveImage}
+                        size="small"
+                      >
+                        <Delete />
+                      </IconButton>
+                    </Box>
+                  ) : (
+                    <Box sx={{ display: "flex", alignItems: 'center', mt: 2, gap: 2 }}>
+                      <Button
+                        variant='outlined'
+                        component="label"
+                        color="primary"
+                        startIcon={<PhotoCamera />}
+                        sx={{ minWidth: 200 }}>
+                        Choose Image
+                        <input
+                          type="file"
+                          hidden
+                          accept="image/*"
+                          onChange={handleImageChange}
+                        />
+                      </Button>
+                    </Box>
+                  )}
 
-export default Login;
+                  {errors.image && (
+                    <Typography variant="caption" color="error">
+                      {errors.image}
+                    </Typography>
+                  )}
+                </Box>
+                <TextField
+                  fullWidth
+                  label="Email"
+                  variant="outlined"
+                  margin="normal"
+                  value={formValues.email}
+                  onChange={(e) => handleFieldChange("email", e.target.value)}
+                  error={Boolean(errors.email)}
+                  helperText={errors.email}
+                />
+                <Box mt={2}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={isSeller}
+                        onChange={(e) => setIsSeller(e.target.checked)}
+                        name="role"
+                        color="primary"
+                      />
+                    }
+                    label="Sign up as Seller"
+                  />
+                </Box>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  sx={{ mt: 3 }}
+                  type="submit"
+                >
+                  Sign Up
+                </Button>
+              </form>
+            </>
+          )}
+        </RightSide>
+      </StyledPaper>
+    );
+  };
+
+  export default Login;

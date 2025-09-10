@@ -2,10 +2,11 @@
 
 import { alpha, Box, Container, Typography, useTheme } from "@mui/material";
 import AddBookButton from "./AddBookButton";
+import { Book } from "../types/Book";
 
 export default function Hero() {
     const theme = useTheme();
-    const onAddBook = (book: any) => {
+    const onAddBook = (book: Book) => {
     console.log('New book added:', book);
     // You can update your book list here or show a success message
   };

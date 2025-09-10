@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useReducer, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useReducer, ReactNode, useCallback } from 'react';
 import { CartItem } from '../types/Cart';
 import { getCart, addToCart, updateCartItem, removeFromCart, clearCart } from '../lib/api';
 import { toast } from 'react-toastify';
@@ -102,7 +102,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const [state, dispatch] = useReducer(cartReducer, initialState);
     const { user } = useAuth();
 
-    const fetchCart = async () => {
+    const fetchCart = useCallback(async () => {
         try {
             // check if user is authenticated and token exists
             const token = getCookie("token");
@@ -114,9 +114,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
             const response = await getCart();
 
             if (response?.data?.items) {
-                const formattedItems = response.data.items.map((item: any) => ({
-                    ...item.bookId,
-                    quantity: item.quantity,
+                const items = response.data.items as Array<{ bookId: CartItem; quantity: number}>
+                const formattedItems = items.map(({bookId, quantity}) => ({
+                    ...bookId,
+                    quantity,
                 }));
                 dispatch({ type: 'SET_CART', payload: formattedItems });
             } else {
@@ -131,7 +132,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 dispatch({ type: 'SET_ERROR', payload: 'Failed to load cart' });
             }
         }
-    };
+    },[user]);
 
     const addToCartHandler = async (book: Book) => {
         try {

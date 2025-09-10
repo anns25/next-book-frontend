@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Button, IconButton, Box, Grid, useTheme, Typography } from '@mui/material';
+import { Button, IconButton, Box, useTheme, Typography } from '@mui/material';
 import { AddShoppingCart, Remove, Add } from '@mui/icons-material';
 import { useCart } from '../contexts/CartContext';
 import { Book } from '../types/Book';

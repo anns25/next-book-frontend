@@ -21,7 +21,6 @@ import { useCart } from '../../contexts/CartContext';
 import { useTheme } from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
 import { loadStripe } from '@stripe/stripe-js';
-import { toast } from 'react-toastify';
 import { useAuth } from '@/app/contexts/AuthContext';
 
 

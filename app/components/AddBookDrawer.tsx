@@ -12,10 +12,9 @@ import { bookSchema } from '../lib/validation/bookSchema';
 interface AddBookDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddBook: (book: any) => void;
 }
 
-export default function AddBookDrawer({ isOpen, onClose, onAddBook }: AddBookDrawerProps) {
+export default function AddBookDrawer({ isOpen, onClose }: AddBookDrawerProps) {
   const [formValues, setFormValues] = useState({
     title: "",
     author: "",
@@ -113,6 +112,7 @@ export default function AddBookDrawer({ isOpen, onClose, onAddBook }: AddBookDra
         setErrors({ general: "Failed to add book. Please try again." });
       }
     } catch (err) {
+      console.error(err);
       setErrors({ general: "Error adding book. Please try again." });
     } finally {
       setLoading(false);
