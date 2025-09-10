@@ -50,7 +50,7 @@ export default function CartPage() {
     const handleCheckout = async () => {
         try {
             await stripePromise;
-            const response = await fetch("http://localhost:3000/api/stripe/create-checkout-session", {
+            const response = await fetch("${process.env.NEXT_PUBLIC_API_URL}/api/stripe/create-checkout-session", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ cartItems }),
@@ -172,7 +172,7 @@ export default function CartPage() {
                                         <CardMedia
                                             component="img"
                                             sx={{ width: 120, height: 160, objectFit: 'cover' }}
-                                            image={`http://localhost:3000/uploads/${item.image}`}
+                                            image={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${item.image}`}
                                             alt={item.title}
                                         />
                                         <Box sx={{ flex: 1 }}>

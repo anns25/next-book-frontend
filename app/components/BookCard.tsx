@@ -35,7 +35,7 @@ const BookCard = ({ book }: BookCardProps) => {
     >
       <CardMedia
         component="img"
-        image={`http://localhost:3000/uploads/${book.image}`}
+        image={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${book.image}`}
         alt={book.title}
         sx={{
           height: 250,

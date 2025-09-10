@@ -109,7 +109,7 @@ const ViewCard = ({ bookId }: ViewCardProps) => {
                 {/* Book Cover */}
                 <Box
                     component="img"
-                    src={`http://localhost:3000/uploads/${book.image}`}
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${book.image}`}
                     alt={book.title}
                     sx={{
                         width: { xs: '100%', md: 300 },

@@ -41,7 +41,7 @@ const Navbar = () => {
         }
 
         // If user_img is a filename, construct the full URL to the backend
-        return `http://localhost:3000/uploads/${user.user_img}`;
+        return `${process.env.NEXT_PUBLIC_API_URL}/uploads/${user.user_img}`;
     };
 
     // FOR HAMBURGER MENU
