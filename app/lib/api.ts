@@ -18,7 +18,7 @@ export async function createBook(bookData: CreateBookData): Promise<Book | null>
         formData.append('summary', bookData.summary);
         formData.append('image', bookData.image);
 
-        const response = await axios.post('/book/add', formData, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/book/add`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${token}`
@@ -39,7 +39,7 @@ export async function createBook(bookData: CreateBookData): Promise<Book | null>
 
 export async function getBooks() {
     try {
-        const res = await axios.get('/book/all');
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/book/all`);
         console.log("Books API Response:", res.data.data);
         if (res.status === 200) {
             return res.data.data;
@@ -54,7 +54,7 @@ export async function getBooks() {
 
 export async function getBookById(id: string) {
     try {
-        const res = await axios.get(`/book/view/${id}`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/book/view/${id}`);
         console.log("response***", res);
         console.log("Book api response : ", res.data.data);
         if (res.status === 200) {
@@ -79,7 +79,7 @@ export async function updateBook(bookData: UpdateBookData): Promise<Book | null>
         if (bookData.summary) formData.append('summary', bookData.summary);
         if (bookData.image) formData.append('image', bookData.image);
 
-        const response = await axios.patch('/book/update', formData, {
+        const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/book/update`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -97,7 +97,7 @@ export async function updateBook(bookData: UpdateBookData): Promise<Book | null>
 
 export async function deleteBook(id: string): Promise<boolean> {
     try {
-        const response = await axios.delete('/book/delete', {
+        const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/book/delete`, {
             data: { id: id } // Your backend expects { id: "..." } in body
         });
         return response.status === 200;
@@ -110,7 +110,7 @@ export async function deleteBook(id: string): Promise<boolean> {
 //Authentication API functions
 export async function loginUser(credentials: LoginCredentials): Promise<AuthResponse | null> {
     try {
-        const response = await axios.post('/user/login', credentials);
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, credentials);
         if (response.status === 200) {
             return response.data;
         }
@@ -133,7 +133,7 @@ export async function registerUser(credentials: RegisterCredentials): Promise<Au
         }
         formData.append('user_img', credentials.user_img);
 
-        const response = await axios.post('/user/register', formData, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/register`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
@@ -156,7 +156,7 @@ export async function registerUser(credentials: RegisterCredentials): Promise<Au
 export async function getCart(): Promise<CartResponse | null> {
     try {
         const token = getCookie("token");
-        const response = await axios.get('/cart/all', {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cart/all`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -171,7 +171,7 @@ export async function getCart(): Promise<CartResponse | null> {
 export async function addToCart(data: AddToCartData): Promise<CartResponse | null> {
     try {
         const token = getCookie("token");
-        const response = await axios.post('/cart/add', data, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/cart/add`, data, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -186,7 +186,7 @@ export async function addToCart(data: AddToCartData): Promise<CartResponse | nul
 export async function updateCartItem(data: UpdateCartData): Promise<CartResponse | null> {
     try {
         const token = getCookie("token");
-        const response = await axios.patch('/cart/update', data, {
+        const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/cart/update`, data, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -201,7 +201,7 @@ export async function updateCartItem(data: UpdateCartData): Promise<CartResponse
 export async function removeFromCart(bookId: string): Promise<CartResponse | null> {
     try {
         const token = getCookie("token");
-        const response = await axios.delete('/cart/delete', {
+        const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/cart/delete`, {
             data: { bookId },
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -217,7 +217,7 @@ export async function removeFromCart(bookId: string): Promise<CartResponse | nul
 export async function clearCart(): Promise<CartResponse | null> {
     try {
         const token = getCookie("token");
-        const response = await axios.delete('/cart/clear', {
+        const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/cart/clear`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
