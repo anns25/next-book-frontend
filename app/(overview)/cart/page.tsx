@@ -50,7 +50,7 @@ export default function CartPage() {
     const handleCheckout = async () => {
         try {
             await stripePromise;
-            const response = await fetch("${process.env.NEXT_PUBLIC_API_URL}/api/stripe/create-checkout-session", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/stripe/create-checkout-session`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ cartItems }),
