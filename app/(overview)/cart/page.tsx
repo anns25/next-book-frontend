@@ -82,7 +82,7 @@ export default function CartPage() {
     }
 
     // Don't render anything if not authenticated 
-    if(!user){
+    if (!user) {
         return null;
     }
 
@@ -151,16 +151,27 @@ export default function CartPage() {
                     }}
                 >
                     <Typography variant="h4" fontFamily={theme.typography.h1.fontFamily}>
-                        Shopping Cart ({totalItems} items)
+                        Cart ({totalItems} items)
                     </Typography>
                     <Button
-                        variant="outlined"
+                        variant="contained"
                         color="error"
                         onClick={clearCart}
-                        startIcon={<Delete />}
+                        sx={{
+                            borderRadius: 2,
+                            // textTransform: "none",
+                            // fontWeight: "bold",
+                            px: { xs: 2, md: 3 },
+                            py: { xs: 1, md: 1.2 },
+                            // backgroundColor: theme.palette.secondary.main,
+                            // "&:hover": {
+                            //     backgroundColor: theme.palette.secondary.dark,
+                            // },
+                        }}
                     >
                         Clear Cart
                     </Button>
+
                 </Box>
 
                 <Grid container spacing={3}>
