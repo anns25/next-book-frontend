@@ -23,7 +23,7 @@ const About = () => {
                         About Us
                     </Typography>
                     <Typography variant= "h6" maxWidth="600px" mx="auto" mb={3} sx={{ fontFamily: theme.typography.body1.fontFamily }}>
-                        We love books and we love connecting readers to stories they'll cherish.
+                        We love books and we love connecting readers to stories they&apos;ll cherish.
                         Our curated selection features a wide range of genres, from timeless classics to contemporary bestsellers.
                     </Typography>
                     <Button variant="contained" color="primary">

@@ -11,7 +11,7 @@ function Contact() {
                     Contact Us
                 </Typography>
                 <Typography variant="body1" gutterBottom align="center">
-                    We'd love to hear from you! Please fill out the form below.
+                    We&apos;d love to hear from you! Please fill out the form below.
                 </Typography>
 
                 <Box
